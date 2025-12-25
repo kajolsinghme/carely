@@ -1,10 +1,10 @@
 export interface SignupInput {
-    name: string;
-    email: string;
-    password: string;
-    age?: number | null;
-    gender?: "Male" | "Female" | null;
-    role?: "Patient" | "Doctor";
+  name: string;
+  email: string;
+  password: string;
+  age?: number | null;
+  gender?: 'Male' | 'Female' | null;
+  role?: 'Patient' | 'Doctor';
 }
 
 export interface SignupResult {
@@ -13,12 +13,12 @@ export interface SignupResult {
   email: string;
 }
 
-export interface LoginInput{
+export interface LoginInput {
   email: string;
-  password: string
+  password: string;
 }
 
-export interface LoginResult{
+export interface LoginResult {
   id: string;
-  role: "Patient" | "Doctor"
+  role: 'Patient' | 'Doctor';
 }

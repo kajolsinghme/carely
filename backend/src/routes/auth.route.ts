@@ -9,4 +9,3 @@ router.post('/signup', validate(signupSchema), asyncHandler(signup));
 router.post('/login', validate(loginSchema), asyncHandler(login));
 
 export default router;
- 

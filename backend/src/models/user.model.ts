@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema<IUser>(
     password: { type: String, required: true, minlength: 4 },
     age: { type: Number, min: 5, max: 100, default: null },
     gender: { type: String, enum: Object.values(Gender), default: null },
-    role: { type: String, enum: Object.values(UserRoles), default: UserRoles.PATIENT },
+    role: {
+      type: String,
+      enum: Object.values(UserRoles),
+      default: UserRoles.PATIENT,
+    },
   },
   {
     timestamps: true,

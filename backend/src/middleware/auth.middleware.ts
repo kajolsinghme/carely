@@ -3,6 +3,7 @@ import AppError from '../errors/app-error.js';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import type { IExtendedRequest } from '../types/express.js';
+import type { UserRoles } from '../constants/user-roles.js';
 
 export const authMiddleware = (
   req: IExtendedRequest,
@@ -19,7 +20,7 @@ export const authMiddleware = (
   try {
     const decoded = jwt.verify(token!, process.env['JWT_SECRET']!) as {
       userId: string;
-      role: string;
+      role: UserRoles;
     };
 
     req.user = {

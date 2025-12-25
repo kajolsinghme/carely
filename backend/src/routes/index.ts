@@ -4,6 +4,6 @@ import doctorProfileRouter from './doctor-profile.route.js';
 const router: Router = express.Router();
 
 router.use('/auth', authRouter);
-router.use('/doctor', doctorProfileRouter)
+router.use('/doctor', doctorProfileRouter);
 
 export default router;

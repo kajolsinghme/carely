@@ -1,5 +1,12 @@
 import mongoose, { Document } from 'mongoose';
 import { DoctorSpecialization } from '../constants/doctor-specialization.js';
+import type { WeekDay } from '../constants/week-day.js';
+
+export interface IAvailability {
+  day: WeekDay;
+  startTime: string;
+  endTime: string;
+}
 
 export interface IDoctorProfile extends Document {
   userId: mongoose.Types.ObjectId;
@@ -8,8 +15,25 @@ export interface IDoctorProfile extends Document {
   yearsOfExperience: number;
   consultationFee: number;
   location: string;
-  availableSlots: string[];
+  availability: IAvailability[];
+  slotDuration: number;
 }
+
+const availabilitySchema = new mongoose.Schema<IAvailability>({
+  day: {
+    type: String,
+    required: true,
+  },
+  startTime: {
+    type: String,
+    required: true,
+  },
+  endTime: {
+    type: String,
+    required: true,
+  },
+});
+
 const doctorProfileSchema = new mongoose.Schema<IDoctorProfile>(
   {
     userId: {
@@ -42,9 +66,14 @@ const doctorProfileSchema = new mongoose.Schema<IDoctorProfile>(
       type: String,
       required: true,
     },
-    availableSlots: {
-      type: [String],
+    availability: {
+      type: [availabilitySchema],
       required: true,
+    },
+    slotDuration: {
+      type: Number,
+      required: true,
+      min: 5,
     },
   },
   { timestamps: true }

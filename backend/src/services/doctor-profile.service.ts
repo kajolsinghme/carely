@@ -27,8 +27,27 @@ export const updateDoctorProfileService = async (
   return doctorProfile;
 };
 
-export const getAllDoctorsService = async () => {
-  return DoctorProfileModel.find().populate({
+export const getAllDoctorsService = async (filters: {specialization?: string, location?: string, minExperience?: number, maxFee?: number}) => {
+  const query: {specialization?: string, location?: string, yearsOfExperience?: {$gte?: number}, consultationFee?: {$lte?: number}} = {}
+
+  if(filters.specialization){
+    query.specialization = filters.specialization
+  }
+
+  if (filters.location) {
+    query.location = filters.location;
+  }
+
+  if (filters.minExperience) {
+    query.yearsOfExperience = {$gte: filters.minExperience};
+  }
+
+  if (filters.maxFee) {
+    query.consultationFee = {$lte: filters.maxFee};
+  }
+
+
+  return DoctorProfileModel.find(query).populate({
     path: 'userId',
     select: 'name email gender age',
   });

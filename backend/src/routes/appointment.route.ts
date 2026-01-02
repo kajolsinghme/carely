@@ -8,13 +8,13 @@ import validate from '../middleware/validate.middleware.js';
 import {
   bookAppointment,
   getMyAppointments,
-//   getAppointmentById,
-//   updateAppointment,
+  //   getAppointmentById,
+  //   updateAppointment,
 } from '../controllers/appointment.controller.js';
 
 import {
   createAppointmentSchema,
-//   updateAppointmentSchema,
+  //   updateAppointmentSchema,
 } from '../validators/appointment.schema.js';
 
 const router: Router = express.Router();

@@ -21,8 +21,8 @@ export const updateDoctorProfile = async (
     .json({ message: 'Doctor profile updated successfully', profile });
 };
 
-export const getAllDoctors = async (_req: Request, res: Response) => {
-  const doctors = await getAllDoctorsService();
+export const getAllDoctors = async (req: Request, res: Response) => {
+  const doctors = await getAllDoctorsService(req.query);
   res
     .status(StatusCodes.OK)
     .json({ message: 'Doctors retreived successfully', doctors });

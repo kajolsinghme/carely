@@ -15,3 +15,15 @@ export const doctorProfileSchema = z.object({
   query: z.object({}).strict(),
   params: z.object({}).strict(),
 });
+
+
+export const listDoctorsSchema = z.object({
+  body: z.object({}).strict().optional(),
+  params: z.object({}).strict().optional(),
+  query: z.object({
+    specialization: z.string().optional(),
+    location: z.string().optional(),
+    minExperience: z.coerce.number().min(0).optional(),
+    maxFee: z.coerce.number().min(0).optional(),
+  }).strict()
+})

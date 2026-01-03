@@ -6,8 +6,18 @@ export interface IAppointment extends Document {
   doctorId: mongoose.Types.ObjectId;
   patientId: mongoose.Types.ObjectId;
   scheduledAt: Date;
+  duration: number;
   status: AppointmentStatus;
-  meetingUrl?: string | null;
+  payment?: {
+    orderId?: string;
+    paymentId?: string;
+    amount?: number;
+    status?: 'CREATED' | 'PAID' | 'FAILED' | 'REFUNDED';
+  };
+  meeting?: {
+    meetingId?: string;
+    meetingUrl?: string;
+  };
   cancelledBy?: UserRoles | null;
 }
 
@@ -17,24 +27,52 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
       type: mongoose.Types.ObjectId,
       ref: 'User',
       required: true,
+      index: true,
     },
     patientId: {
       type: mongoose.Types.ObjectId,
       ref: 'User',
       required: true,
+      index: true,
     },
     scheduledAt: {
       type: Date,
       required: true,
+      index: true,
+    },
+    duration: {
+      type: Number,
+      required: true,
+      min: 5,
     },
     status: {
       type: String,
       enum: Object.values(AppointmentStatus),
       default: AppointmentStatus.PENDING,
+      index: true,
     },
-    meetingUrl: {
-      type: String,
-      default: null,
+    payment: {
+      orderId: {
+        type: String,
+      },
+      paymentId: {
+        type: String,
+      },
+      amount: {
+        type: Number,
+      },
+      status: {
+        type: String,
+        enum: ['CREATED', 'PAID', 'FAILED', 'REFUNDED'],
+      },
+    },
+    meeting: {
+      meetingId: {
+        type: String,
+      },
+      meetingUrl: {
+        type: String,
+      },
     },
     cancelledBy: {
       type: String,
@@ -47,6 +85,10 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
   }
 );
 
+appointmentSchema.index(
+   { doctorId: 1, scheduledAt: 1 },
+   { unique: true }
+)
 export const AppointmentModel = mongoose.model<IAppointment>(
   'Appointment',
   appointmentSchema

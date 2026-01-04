@@ -1,6 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 import { AppointmentStatus } from '../constants/appointment-status.js';
 import { UserRoles } from '../constants/user-roles.js';
+import { PaymentStatus } from '../constants/payment-status.js';
 
 export interface IAppointment extends Document {
   doctorId: mongoose.Types.ObjectId;
@@ -12,7 +13,7 @@ export interface IAppointment extends Document {
     orderId?: string;
     paymentId?: string;
     amount?: number;
-    status?: 'CREATED' | 'PAID' | 'FAILED' | 'REFUNDED';
+    status?: PaymentStatus;
   };
   meeting?: {
     meetingId?: string;
@@ -63,7 +64,7 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
       },
       status: {
         type: String,
-        enum: ['CREATED', 'PAID', 'FAILED', 'REFUNDED'],
+        enum: Object.values(PaymentStatus),
       },
     },
     meeting: {

@@ -3,6 +3,7 @@ import type { IExtendedRequest } from '../types/express.js';
 import type { Response } from 'express';
 import {
   bookAppointmentService,
+  checkoutAppointmentService,
   getMyAppointmentsService,
 } from '../services/appointment.service.js';
 
@@ -15,6 +16,14 @@ export const bookAppointment = async (req: IExtendedRequest, res: Response) => {
     .status(StatusCodes.CREATED)
     .json({ message: 'Appointment booked successfully', appointment });
 };
+
+export const checkoutAppointment = async(req: IExtendedRequest, res: Response) => {
+  const userId = req.user!.userId
+
+  const appointment = await checkoutAppointmentService(userId, req.body)
+
+  res.status(StatusCodes.CREATED).json({message: '', appointment})
+}
 
 export const getMyAppointments = async (
   req: IExtendedRequest,

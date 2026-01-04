@@ -7,12 +7,14 @@ import validate from '../middleware/validate.middleware.js';
 
 import {
   bookAppointment,
+  checkoutAppointment,
   getMyAppointments,
   //   getAppointmentById,
   //   updateAppointment,
 } from '../controllers/appointment.controller.js';
 
 import {
+  checkoutAppointmentSchema,
   createAppointmentSchema,
   //   updateAppointmentSchema,
 } from '../validators/appointment.schema.js';
@@ -26,6 +28,16 @@ router.post(
   validate(createAppointmentSchema),
   asyncHandler(bookAppointment)
 );
+
+router.post(
+  '/checkout',
+  authMiddleware,
+  allowRoles([UserRoles.PATIENT]),
+  validate(checkoutAppointmentSchema),
+  asyncHandler(checkoutAppointment)
+);
+
+
 
 router.get(
   '/',

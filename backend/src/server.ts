@@ -6,6 +6,7 @@ import { connectDB } from './config/db.js';
 import routes from './routes/index.js';
 import errorHandler from './middleware/error-handler.js';
 import { validateEnvVars } from './config/env.js';
+import { startAppointmentReminderCron } from './cron/appointmentReminder.cron.js';
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.use(`/`, routes);
 app.use(errorHandler);
 
 await connectDB();
+
+startAppointmentReminderCron();
 
 const PORT = Number(process.env['PORT']) || 6000;
 

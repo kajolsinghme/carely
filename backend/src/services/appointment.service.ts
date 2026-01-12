@@ -7,6 +7,8 @@ import { UserRoles } from '../constants/user-roles.js';
 import Razorpay from 'razorpay';
 import { DoctorProfileModel } from '../models/doctor-profile.model.js';
 import { PaymentStatus } from '../constants/payment-status.js';
+import { createZoomMeeting } from './zoom.service.js';
+import { UserModel } from '../models/user.model.js';
 
 export const checkoutAppointmentService = async (
   userId: string,
@@ -96,6 +98,25 @@ export const confirmAppointmentService = async (
   appointment.payment.paymentId = razorpayPaymentId;
   appointment.payment.status = PaymentStatus.PAID;
   appointment.status = AppointmentStatus.BOOKED;
+
+  const doctor = await UserModel.findById(appointment.doctorId);
+
+  if (!doctor) {
+    throw new AppError('Doctor not found', StatusCodes.NOT_FOUND);
+  }
+
+  //create zoom meeting
+
+  const zoomMeeting = await createZoomMeeting(
+    `Appointment with Dr. ${doctor.name}`,
+    appointment.scheduledAt.toISOString(),
+    appointment.duration
+  );
+
+  appointment.meeting = {
+    meetingId: zoomMeeting.meetingId,
+    meetingUrl: zoomMeeting.meetingUrl,
+  };
 
   await appointment.save();
 

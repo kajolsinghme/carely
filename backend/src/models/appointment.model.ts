@@ -15,7 +15,7 @@ export interface IAppointment extends Document {
     amount?: number;
     status?: PaymentStatus;
   };
-  meeting?: {
+  meeting: {
     meetingId?: string;
     meetingUrl?: string;
   };

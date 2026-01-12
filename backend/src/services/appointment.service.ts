@@ -80,12 +80,14 @@ export const confirmAppointmentService = async (
   appointmentId: string,
   razorpayPaymentId: string
 ) => {
+  // Fetch appointment
   const appointment = await AppointmentModel.findById(appointmentId);
 
   if (!appointment) {
     throw new AppError('Appointment not found', StatusCodes.NOT_FOUND);
   }
 
+  //  Validate appointment state
   if (appointment.status !== AppointmentStatus.PENDING_PAYMENT) {
     throw new AppError('Appointment cannot be booked', StatusCodes.BAD_REQUEST);
   }
@@ -94,11 +96,7 @@ export const confirmAppointmentService = async (
     throw new AppError('Appointment already confirmed', StatusCodes.CONFLICT);
   }
 
-  // Update payment + status
-  appointment.payment.paymentId = razorpayPaymentId;
-  appointment.payment.status = PaymentStatus.PAID;
-  appointment.status = AppointmentStatus.BOOKED;
-
+  // Fetch doctor
   const doctor = await UserModel.findById(appointment.doctorId);
 
   if (!doctor) {
@@ -112,6 +110,14 @@ export const confirmAppointmentService = async (
     appointment.scheduledAt.toISOString(),
     appointment.duration
   );
+
+  // Update appointment payment and meeting details
+  appointment.payment = {
+    paymentId: razorpayPaymentId,
+    status: PaymentStatus.PAID,
+  };
+
+  appointment.status = AppointmentStatus.BOOKED;
 
   appointment.meeting = {
     meetingId: zoomMeeting.meetingId,

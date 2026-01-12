@@ -8,29 +8,6 @@ import Razorpay from 'razorpay';
 import { DoctorProfileModel } from '../models/doctor-profile.model.js';
 import { PaymentStatus } from '../constants/payment-status.js';
 
-export const bookAppointmentService = async (
-  userId: string,
-  data: AppointmentInput
-) => {
-  const existingAppointment = await AppointmentModel.findOne({
-    doctorId: data.doctorId,
-    scheduledAt: data.scheduledAt,
-    status: { $in: [AppointmentStatus.PENDING, AppointmentStatus.BOOKED] },
-  });
-
-  if (existingAppointment) {
-    throw new AppError('This slot is already booked', StatusCodes.CONFLICT);
-  }
-
-  const appointment = await AppointmentModel.create({
-    patientId: userId,
-    doctorId: data.doctorId,
-    scheduledAt: data.scheduledAt,
-  });
-
-  return appointment;
-};
-
 export const checkoutAppointmentService = async (
   userId: string,
   data: AppointmentInput
@@ -49,29 +26,29 @@ export const checkoutAppointmentService = async (
     key_secret: keySecret,
   });
   // Validate doctor exists
-  const doctor = await DoctorProfileModel.findOne({ userId: data.doctorId })
-  if (!doctor) throw new AppError('Doctor not found', StatusCodes.NOT_FOUND)
+  const doctor = await DoctorProfileModel.findOne({ userId: data.doctorId });
+  if (!doctor) throw new AppError('Doctor not found', StatusCodes.NOT_FOUND);
 
   // Check slot availability
   const slotTaken = await AppointmentModel.findOne({
     doctorId: data.doctorId,
     scheduledAt: data.scheduledAt,
     status: {
-      $in: [AppointmentStatus.PENDING_PAYMENT, AppointmentStatus.CONFIRMED],
+      $in: [AppointmentStatus.PENDING_PAYMENT, AppointmentStatus.BOOKED],
     },
   });
   if (slotTaken)
-    throw new AppError('Slot already booked', StatusCodes.CONFLICT)
+    throw new AppError('Slot already booked', StatusCodes.CONFLICT);
 
   // Calculate amount
-  const amount = doctor.consultationFee + 100;
+  const amount = (doctor.consultationFee + 100) * 100;
 
   // Create Razorpay order
   const order = await razorpay.orders.create({
     amount,
     currency: 'INR',
-    receipt: `appt_${Date.now()}`
-  })
+    receipt: `appt_${Date.now()}`,
+  });
 
   // Create Appointment(Pending_Payment)
   const appointment = await AppointmentModel.create({
@@ -83,18 +60,46 @@ export const checkoutAppointmentService = async (
     payment: {
       orderId: order.id,
       amount,
-      status: PaymentStatus.CREATED
-    }
-  })
+      status: PaymentStatus.CREATED,
+    },
+  });
 
   return {
     appointmentId: appointment._id,
     order: {
       orderId: order.id,
       amount,
-      currency: 'INR'
-    }
+      currency: 'INR',
+    },
+  };
+};
+
+export const confirmAppointmentService = async (
+  appointmentId: string,
+  razorpayPaymentId: string
+) => {
+  const appointment = await AppointmentModel.findById(appointmentId);
+
+  if (!appointment) {
+    throw new AppError('Appointment not found', StatusCodes.NOT_FOUND);
   }
+
+  if (appointment.status !== AppointmentStatus.PENDING_PAYMENT) {
+    throw new AppError('Appointment cannot be booked', StatusCodes.BAD_REQUEST);
+  }
+
+  if (appointment.payment.status === PaymentStatus.PAID) {
+    throw new AppError('Appointment already confirmed', StatusCodes.CONFLICT);
+  }
+
+  // Update payment + status
+  appointment.payment.paymentId = razorpayPaymentId;
+  appointment.payment.status = PaymentStatus.PAID;
+  appointment.status = AppointmentStatus.BOOKED;
+
+  await appointment.save();
+
+  return appointment;
 };
 
 export const getMyAppointmentsService = async (

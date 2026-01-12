@@ -6,8 +6,8 @@ import { UserRoles } from '../constants/user-roles.js';
 import validate from '../middleware/validate.middleware.js';
 
 import {
-  bookAppointment,
   checkoutAppointment,
+  confirmAppointment,
   getMyAppointments,
   //   getAppointmentById,
   //   updateAppointment,
@@ -15,19 +15,11 @@ import {
 
 import {
   checkoutAppointmentSchema,
-  createAppointmentSchema,
+  confirmAppointmentSchema,
   //   updateAppointmentSchema,
 } from '../validators/appointment.schema.js';
 
 const router: Router = express.Router();
-
-router.post(
-  '/',
-  authMiddleware,
-  allowRoles([UserRoles.PATIENT]),
-  validate(createAppointmentSchema),
-  asyncHandler(bookAppointment)
-);
 
 router.post(
   '/checkout',
@@ -37,7 +29,13 @@ router.post(
   asyncHandler(checkoutAppointment)
 );
 
-
+router.post(
+  '/:id/confirm',
+  authMiddleware,
+  allowRoles([UserRoles.PATIENT]),
+  validate(confirmAppointmentSchema),
+  asyncHandler(confirmAppointment)
+);
 
 router.get(
   '/',

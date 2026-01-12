@@ -9,7 +9,7 @@ export interface IAppointment extends Document {
   scheduledAt: Date;
   duration: number;
   status: AppointmentStatus;
-  payment?: {
+  payment: {
     orderId?: string;
     paymentId?: string;
     amount?: number;
@@ -49,7 +49,7 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
     status: {
       type: String,
       enum: Object.values(AppointmentStatus),
-      default: AppointmentStatus.PENDING,
+      default: AppointmentStatus.PENDING_PAYMENT,
       index: true,
     },
     payment: {

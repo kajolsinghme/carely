@@ -1,20 +1,44 @@
-const Navbar = () => {
-  return (
-    <>
-      <div className="border-e-neutral-900 border-2 h-14 flex justify-between">
-        <div className="flex gap-1 items-center ml-20">
-          <img src="../src/assets/Carely Logo.png" alt="Logo" className="w-12 h-9" />
-          <p className="text-2xl font-bold">Carely</p>
-        </div>
-        <div className="flex gap-6 items-center ml-20 list-none">
-          <li><a href="">Find Doctors</a></li>
-          <li><a href="">Consult Online</a></li>
-          <li><a href="">For Doctors</a></li>
-        </div>
-        <div>Right</div>
-      </div>
-    </>
-  )
-}
+import ReusableButton from "./ReusableButton";
 
-export default Navbar
+const Navbar = () => {
+  const handleLogin = () => {
+    alert("Logged in !");
+  };
+  return (
+    <header className="border-b border-gray-200 bg-white">
+      <nav className="h-16 max-w-7xl  mx-auto  px-6 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <img
+            src="../src/assets/Carely Logo.png"
+            alt="Logo"
+            className="w-10 h-8"
+          />
+          <span className="text-2xl font-semibold text-gray-900">Carely</span>
+        </div>
+
+        <ul className="flex items-center gap-8 text-gray-600 font-medium list-none">
+          <li>
+            <a href="/" className="hover:text-teal-700 transition-colors">
+              Find Doctors
+            </a>
+          </li>
+          <li>
+            <a href="/" className="hover:text-teal-700 transition-colors">
+              Consult Online
+            </a>
+          </li>
+          <li>
+            <a href="/" className="hover:text-teal-700 transition-colors">
+              For Doctors
+            </a>
+          </li>
+        </ul>
+
+        <ReusableButton label="Log In" onClick={handleLogin} />
+        
+      </nav>
+    </header>
+  );
+};
+
+export default Navbar;

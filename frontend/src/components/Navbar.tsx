@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <header className="border-b border-gray-200 bg-white">
       <nav className="h-16 max-w-7xl  mx-auto  px-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-16">
           <img
             src="../src/assets/Carely Logo.png"
             alt="Logo"
@@ -33,9 +33,9 @@ const Navbar = () => {
             </a>
           </li>
         </ul>
-
-        <ReusableButton label="Log In" onClick={handleLogin} />
+        <div className="mr-16"><ReusableButton label="Log In" onClick={handleLogin} /></div>
         
+
       </nav>
     </header>
   );

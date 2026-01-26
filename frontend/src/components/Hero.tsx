@@ -8,7 +8,7 @@ const Hero = () => {
     <section className="max-w-7xl px-3">
       <div className="flex items-center  h-125 justify-between gap-6">
         <div className="w-1/2 px-16">
-          <h1 className="text-5xl font-bold text-gray-900 leading-tight">
+          <h1 className="text-[49px] font-bold text-gray-900 leading-tight">
             Book Doctor{" "}
             <span className="text-teal-600 ">Appointments Online</span>
           </h1>
@@ -31,5 +31,4 @@ const Hero = () => {
     </section>
   );
 };
-
 export default Hero;

@@ -3,8 +3,8 @@ import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300">
-      <div>
-        <div className="grid grid-cols-3">
+      <div className="max-w-7xl mx-auto px-6 p-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div>
                 <h3 className="text-2xl font-semibold text-white">Carely</h3>
                 <p className="mt-4 text-sm text-gray-400">Carely helps you find trusted doctors, book appointments,
@@ -47,6 +47,14 @@ const Footer = () => {
                 </div>
             </div>
 
+        </div>
+
+        <div className="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
+            <p>© {new Date().getFullYear()} Carely. All Rights Reserved.</p>
+            <div className="flex gap-6 mt-4 md:mt-0">
+                <a href="/" className="hover:text-white transition">Privacy Policy</a>
+                <a href="/" className="hover:text-white transition">Terms of Service</a>
+            </div>
         </div>
       </div>
     </footer>

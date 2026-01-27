@@ -7,7 +7,10 @@ import {
   updateDoctorProfile,
 } from '../controllers/doctor-profile.controller.js';
 import validate from '../middleware/validate.middleware.js';
-import { doctorProfileSchema, listDoctorsSchema } from '../validators/doctor-profile.schema.js';
+import {
+  doctorProfileSchema,
+  listDoctorsSchema,
+} from '../validators/doctor-profile.schema.js';
 import { allowRoles } from '../middleware/role.middleware.js';
 import { UserRoles } from '../constants/user-roles.js';
 

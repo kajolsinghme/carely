@@ -1,4 +1,4 @@
-import { mailTransporter } from "../config/mail.js";
+import { mailTransporter } from '../config/mail.js';
 
 interface SendMailInput {
   to: string;
@@ -6,12 +6,11 @@ interface SendMailInput {
   html: string;
 }
 
-
 export const sendMail = async ({ to, subject, html }: SendMailInput) => {
-    await mailTransporter.sendMail({
-        from: process.env['MAIL_FROM'],
-        to,
-        subject,
-        html
-    })
-}
+  await mailTransporter.sendMail({
+    from: process.env['MAIL_FROM'],
+    to,
+    subject,
+    html,
+  });
+};

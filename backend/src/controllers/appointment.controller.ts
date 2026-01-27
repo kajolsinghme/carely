@@ -7,27 +7,37 @@ import {
   getMyAppointmentsService,
 } from '../services/appointment.service.js';
 
-export const checkoutAppointment = async(req: IExtendedRequest, res: Response) => {
-  const userId = req.user!.userId
+export const checkoutAppointment = async (
+  req: IExtendedRequest,
+  res: Response
+) => {
+  const userId = req.user!.userId;
 
-  const appointment = await checkoutAppointmentService(userId, req.body)
+  const appointment = await checkoutAppointmentService(userId, req.body);
 
-  res.status(StatusCodes.CREATED).json({message:'Appointment checkout initiated', appointment})
-}
+  res
+    .status(StatusCodes.CREATED)
+    .json({ message: 'Appointment checkout initiated', appointment });
+};
 
-export const confirmAppointment = async(req: IExtendedRequest, res: Response) => {
-  const appointmentId = req.params['id']!
+export const confirmAppointment = async (
+  req: IExtendedRequest,
+  res: Response
+) => {
+  const appointmentId = req.params['id']!;
 
-  const {razorpayPaymentId} = req.body
-  const appointment = await confirmAppointmentService(appointmentId, razorpayPaymentId)
-  
+  const { razorpayPaymentId } = req.body;
+  const appointment = await confirmAppointmentService(
+    appointmentId,
+    razorpayPaymentId
+  );
+
   res.status(StatusCodes.OK).json({
     message: 'Appointment booked successfully',
     appointment,
   });
+};
 
-}
- 
 export const getMyAppointments = async (
   req: IExtendedRequest,
   res: Response

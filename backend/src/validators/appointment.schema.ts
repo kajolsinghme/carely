@@ -7,7 +7,7 @@ export const checkoutAppointmentSchema = z.object({
       scheduledAt: z.string().refine((val) => !isNaN(Date.parse(val)), {
         message: 'Invalid date format',
       }),
-      duration: z.number().min(15).max(120)
+      duration: z.number().min(15).max(120),
     })
     .strict(),
   params: z.object({}),
@@ -17,11 +17,11 @@ export const checkoutAppointmentSchema = z.object({
 export const confirmAppointmentSchema = z.object({
   body: z
     .object({
-      razorpayPaymentId: z.string().min(1, 'Razorpay Payment ID is required')
+      razorpayPaymentId: z.string().min(1, 'Razorpay Payment ID is required'),
     })
     .strict(),
   params: z.object({
-    id: z.string().min(1)
+    id: z.string().min(1),
   }),
   query: z.object({}),
 });

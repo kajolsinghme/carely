@@ -16,26 +16,32 @@ const Navbar = () => {
           <span className="text-2xl font-semibold text-gray-900">Carely</span>
         </div>
 
-        <ul className="flex items-center gap-8 text-gray-600 font-medium list-none">
+        <ul className="flex items-center gap-8 text-gray-600 font-medium">
           <li>
             <a href="/" className="hover:text-teal-700 transition-colors">
+              Home
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="/doctors"
+              className="hover:text-teal-700 transition-colors"
+            >
               Find Doctors
             </a>
           </li>
+
           <li>
-            <a href="/" className="hover:text-teal-700 transition-colors">
-              Consult Online
-            </a>
-          </li>
-          <li>
-            <a href="/" className="hover:text-teal-700 transition-colors">
-              For Doctors
+            <a href="#about" className="hover:text-teal-700 transition-colors">
+              About
             </a>
           </li>
         </ul>
-        <div className="mr-16"><ReusableButton label="Log In" onClick={handleLogin} /></div>
-        
 
+        <div className="mr-16">
+          <ReusableButton label="Log In" onClick={handleLogin} />
+        </div>
       </nav>
     </header>
   );

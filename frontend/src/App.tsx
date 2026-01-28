@@ -1,9 +1,11 @@
-import HomePage from './pages/HomePage';
+import About from './pages/About';
+// import HomePage from './pages/HomePage';
 
 const App = () => {
   return (
     <div>
-      <HomePage/>
+      <About/>
+      {/* <HomePage/> */}
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ReusableButton from "./ReusableButton";
 
 const Navbar = () => {
@@ -18,24 +19,24 @@ const Navbar = () => {
 
         <ul className="flex items-center gap-8 text-gray-600 font-medium">
           <li>
-            <a href="/" className="hover:text-teal-700 transition-colors">
+            <Link to="/" className="hover:text-teal-700 transition-colors">
               Home
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a
-              href="/doctors"
+            <Link
+              to="/doctors"
               className="hover:text-teal-700 transition-colors"
             >
               Find Doctors
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a href="#about" className="hover:text-teal-700 transition-colors">
+            <Link to="/about" className="hover:text-teal-700 transition-colors">
               About
-            </a>
+            </Link>
           </li>
         </ul>
 

@@ -78,7 +78,7 @@ const BookAppointment = () => {
             <Button
               label="Proceed to Payment"
               width={96}
-              onClick={() => navigate("/payments")}
+              onClick={() => navigate("/payment")}
             />
           </div>
         </div>

@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import Doctors from "./pages/Doctors";
 import About from "./pages/About";
 import BookAppointment from "./pages/BookAppointment";
+import Payment from "./pages/Payment";
 
 const App = () => {
   return (
@@ -11,6 +12,8 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/doctors" element={<Doctors />} />
         <Route path="/book/:id" element={<BookAppointment />} />
+        <Route path="/payment" element={<Payment />} />
+        {/* <Route path="/success" element={<BookingSuccess />} /> */}
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>

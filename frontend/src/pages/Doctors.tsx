@@ -14,6 +14,7 @@ const Doctors = () => {
       name: "Sophia Wilson",
       specialty: "Cardiologist",
       experience: "10 years",
+      availableToday: true,
       img: "https://randomuser.me/api/portraits/women/64.jpg",
     },
     {
@@ -21,6 +22,7 @@ const Doctors = () => {
       name: "Robert Williams",
       specialty: "Neurologist",
       experience: "8 years",
+      availableToday: true,
       img: "https://randomuser.me/api/portraits/men/32.jpg",
     },
     {
@@ -28,6 +30,7 @@ const Doctors = () => {
       name: "Amelia Jones",
       specialty: "Dermatologist",
       experience: "5 years",
+      availableToday: false,
       img: "https://randomuser.me/api/portraits/women/68.jpg",
     },
     {
@@ -35,20 +38,23 @@ const Doctors = () => {
       name: "David Smith",
       specialty: "Pediatrician",
       experience: "7 years",
+      availableToday: true,
       img: "https://randomuser.me/api/portraits/men/64.jpg",
     },
     {
-      id: 4,
+      id: 5,
       name: "David Smith",
       specialty: "Pediatrician",
       experience: "7 years",
+      availableToday: true,
       img: "https://randomuser.me/api/portraits/men/34.jpg",
     },
     {
-      id: 4,
+      id: 6,
       name: "David Smith",
       specialty: "Pediatrician",
       experience: "7 years",
+      availableToday: true,
       img: "https://randomuser.me/api/portraits/men/24.jpg",
     },
   ];
@@ -56,10 +62,8 @@ const Doctors = () => {
     <div>
       <Navbar />
       <div className="max-w-7xl mx-auto px-6 py-10 bg-gray-50">
-        {/* Page Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-extrabold text-gray-900">
-            {" "}
             Find <span className="text-teal-600">Doctors</span>
           </h1>
           <p className="text-gray-500 text-lg font-semibold mt-2">
@@ -67,8 +71,8 @@ const Doctors = () => {
           </p>
         </div>
 
-        {/* Search & Filters */}
-        <div className="flex justify-center mb-10">
+        {/* Search */}
+        <div className="flex justify-center mb-3">
           <input
             type="search"
             name=""
@@ -78,7 +82,71 @@ const Doctors = () => {
           />
         </div>
 
-        <div className="mt-8">Filter</div>
+        {/* Filters */}
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-6 mb-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {/* Location */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Location
+              </label>
+              <select className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <option>All Locations</option>
+                <option>Delhi</option>
+                <option>Mumbai</option>
+                <option>Bangalore</option>
+              </select>
+            </div>
+
+            {/* Illness */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Illness
+              </label>
+              <select className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <option>All Types</option>
+                <option>Heart</option>
+                <option>Skin</option>
+                <option>Brain</option>
+              </select>
+            </div>
+
+            {/* Experience */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Experience
+              </label>
+              <select className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <option>Any Experience</option>
+                <option>5+ years</option>
+                <option>10+ years</option>
+              </select>
+            </div>
+
+            {/* Fees */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Fees
+              </label>
+              <select className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <option>Any Range</option>
+                <option>₹200 - ₹500</option>
+                <option>₹500 - ₹1000</option>
+              </select>
+            </div>
+
+            {/* Availability */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Availability
+              </label>
+              <select className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <option>Any</option>
+                <option>Available Today</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
         {/* Doctors Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 m-8">
@@ -97,7 +165,7 @@ const Doctors = () => {
                 Dr. {doctor.name}
               </h3>
 
-              <p className="text-lg text-teal-600 font-medium mt-1">
+              <p className="text-md text-teal-600 font-bold mt-1">
                 {doctor.specialty}
               </p>
 

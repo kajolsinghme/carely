@@ -175,9 +175,9 @@ const Doctors = () => {
 
               <div className="mt-3 w-full flex justify-center">
                 <ReusableButton
-                  label="Book"
+                  label="Book Appointment"
                   onClick={handleBook}
-                  bgColor="bg-teal-600"
+                  width={44}
                 />
               </div>
             </div>

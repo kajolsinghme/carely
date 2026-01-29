@@ -1,5 +1,11 @@
 import Button from "../components/Button";
 
+declare global {
+  interface Window {
+    Razorpay: new (options: unknown) => { open: () => void };
+  }
+}
+
 const Payment = () => {
   // const handlePayment = () => {
   //   alert("Hi")

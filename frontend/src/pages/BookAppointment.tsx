@@ -1,10 +1,24 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
+import {  useParams } from "react-router-dom";
+import { checkoutAppointment } from "../api/appointment.api";
 
 const BookAppointment = () => {
-  const navigate = useNavigate();
+  const {id} = useParams()
+
+  const handleCheckout = async() => {
+    try{
+      const response = await checkoutAppointment({
+        doctorId: id,
+        scheduledAt: "",
+        duration: 
+      })
+    }
+    catch(error){
+       console.error("Checkout failed:", error);
+    }
+  }
   const consultationFee = 600;
 
   return (
@@ -73,12 +87,11 @@ const BookAppointment = () => {
             </div>
           </div>
 
-          {/* Action */}
           <div className="mt-8 text-center">
             <Button
               label="Proceed to Payment"
               width={96}
-              onClick={() => navigate("/payment")}
+              onClick={handleCheckout}
             />
           </div>
         </div>

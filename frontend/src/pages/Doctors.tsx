@@ -1,41 +1,61 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ReusableButton from "../components/ReusableButton";
 
 const Doctors = () => {
+  const handleBook = () => {
+    // Handle booking logic here
+    console.log("Book appointment");
+  };
+
   const doctorsData = [
     {
       id: 1,
-      name: "Dr. Priya Sharma",
+      name: "Sophia Wilson",
       specialty: "Cardiologist",
       experience: "10 years",
-      img: "https://randomuser.me/api/portraits/women/44.jpg",
+      img: "https://randomuser.me/api/portraits/women/64.jpg",
     },
     {
       id: 2,
-      name: "Dr. Amit Verma",
+      name: "Robert Williams",
       specialty: "Neurologist",
       experience: "8 years",
       img: "https://randomuser.me/api/portraits/men/32.jpg",
     },
     {
       id: 3,
-      name: "Dr. Neha Kapoor",
+      name: "Amelia Jones",
       specialty: "Dermatologist",
       experience: "5 years",
       img: "https://randomuser.me/api/portraits/women/68.jpg",
     },
     {
       id: 4,
-      name: "Dr. Rohit Singh",
+      name: "David Smith",
       specialty: "Pediatrician",
       experience: "7 years",
-      img: "https://randomuser.me/api/portraits/men/55.jpg",
+      img: "https://randomuser.me/api/portraits/men/64.jpg",
+    },
+    {
+      id: 4,
+      name: "David Smith",
+      specialty: "Pediatrician",
+      experience: "7 years",
+      img: "https://randomuser.me/api/portraits/men/34.jpg",
+    },
+    {
+      id: 4,
+      name: "David Smith",
+      specialty: "Pediatrician",
+      experience: "7 years",
+      img: "https://randomuser.me/api/portraits/men/24.jpg",
     },
   ];
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl max-auto px-6 py-10 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-6 py-10 bg-gray-50">
         {/* Page Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-extrabold text-gray-900">
@@ -48,12 +68,12 @@ const Doctors = () => {
         </div>
 
         {/* Search & Filters */}
-        <div>
+        <div className="flex justify-center mb-10">
           <input
             type="search"
             name=""
             id=""
-            className="border-2 border-gray-200 bg-white rounded-xl mx-36 mb-8 p-4 w-230.5 h-14 shadow-lg font-bold "
+            className="border border-gray-300 bg-white rounded-xl px-5 w-full max-w-3xl h-14 shadow-lg font-medium focus:outline-none focus:ring-2 focus:ring-teal-500"
             placeholder="Search doctors or specialities..."
           />
         </div>
@@ -61,17 +81,40 @@ const Doctors = () => {
         <div className="mt-8">Filter</div>
 
         {/* Doctors Grid */}
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 m-8">
           {doctorsData.map((doctor) => (
-            <div key={doctor.id}>
-              <img src={doctor.img} alt="" />
-              <h1>{doctor.name}</h1>
-              <h2>{doctor.specialty}</h2>
-              <p>{doctor.experience}</p>
+            <div
+              key={doctor.id}
+              className="bg-white border border-gray-200 rounded-2xl p-3 flex flex-col items-center text-center hover:shadow-xl"
+            >
+              <img
+                src={doctor.img}
+                alt={doctor.name}
+                className="w-28 h-28 rounded-full object-cover mb-4"
+              />
+
+              <h3 className="text-xl font-semibold text-gray-900">
+                Dr. {doctor.name}
+              </h3>
+
+              <p className="text-lg text-teal-600 font-medium mt-1">
+                {doctor.specialty}
+              </p>
+
+              <p className="text-md text-gray-500 mt-1">
+                {doctor.experience} experience
+              </p>
+
+              <div className="mt-3 w-full flex justify-center">
+                <ReusableButton
+                  label="Book"
+                  onClick={handleBook}
+                  bgColor="bg-teal-600"
+                />
+              </div>
             </div>
           ))}
-         </div>
-
+        </div>
       </div>
       <Footer />
     </div>

@@ -1,11 +1,11 @@
-type ReusableButtonProps = {
+type ButtonProps = {
   label: string;
   width?: number
   onClick: () => void;
   bgColor?: string;
 };
 
-const ReusableButton: React.FC<ReusableButtonProps> = ({ label, width=24, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ label, width=28, onClick }) => {
   return (
     <div>
       <button
@@ -20,4 +20,4 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({ label, width=24, onClic
   );
 };
 
-export default ReusableButton;
+export default Button;

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import ReusableButton from "./ReusableButton";
+import ReusableButton from "./Button";
 
 const Navbar = () => {
   const handleLogin = () => {

@@ -1,11 +1,13 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ReusableButton from "../components/ReusableButton";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
 
 const Doctors = () => {
-  const handleBook = () => {
-    // Handle booking logic here
-    console.log("Book appointment");
+  const navigate = useNavigate();
+
+  const handleBook = (id: number) => {
+    navigate(`/book/${id}`);
   };
 
   const doctorsData = [
@@ -14,6 +16,7 @@ const Doctors = () => {
       name: "Sophia Wilson",
       specialty: "Cardiologist",
       experience: "10 years",
+      fees: "₹1000",
       availableToday: true,
       img: "https://randomuser.me/api/portraits/women/64.jpg",
     },
@@ -22,6 +25,7 @@ const Doctors = () => {
       name: "Robert Williams",
       specialty: "Neurologist",
       experience: "8 years",
+      fees: "₹500",
       availableToday: true,
       img: "https://randomuser.me/api/portraits/men/32.jpg",
     },
@@ -30,6 +34,7 @@ const Doctors = () => {
       name: "Amelia Jones",
       specialty: "Dermatologist",
       experience: "5 years",
+      fees: "₹800",
       availableToday: false,
       img: "https://randomuser.me/api/portraits/women/68.jpg",
     },
@@ -43,19 +48,21 @@ const Doctors = () => {
     },
     {
       id: 5,
-      name: "David Smith",
-      specialty: "Pediatrician",
-      experience: "7 years",
+      name: "Avid Roger",
+      specialty: "Orthopedist",
+      experience: "16 years",
+      fees: "₹1500",
       availableToday: true,
       img: "https://randomuser.me/api/portraits/men/34.jpg",
     },
     {
       id: 6,
-      name: "David Smith",
-      specialty: "Pediatrician",
-      experience: "7 years",
+      name: "Richie Gold",
+      specialty: "Orthodontist",
+      experience: "4 years",
+      fees: "₹500",
       availableToday: true,
-      img: "https://randomuser.me/api/portraits/men/24.jpg",
+      img: "https://randomuser.me/api/portraits/women/24.jpg",
     },
   ];
   return (
@@ -173,11 +180,16 @@ const Doctors = () => {
                 {doctor.experience} experience
               </p>
 
-              <div className="mt-3 w-full flex justify-center">
-                <ReusableButton
+              <p className="text-md text-gray-700 font-semibold mt-1">
+                Consultation Fees:{" "}
+                <span className="text-gray-800">{doctor.fees}</span>
+              </p>
+
+              <div className="mt-2 w-full flex justify-center">
+                <Button
                   label="Book Appointment"
-                  onClick={handleBook}
-                  width={44}
+                  onClick={() => handleBook(doctor.id)}
+                  width={48}
                 />
               </div>
             </div>

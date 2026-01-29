@@ -1,4 +1,4 @@
-import ReusableButton from "./ReusableButton";
+import ReusableButton from "./Button";
 
 const Hero = () => {
   const handleFindDoctor = () => {

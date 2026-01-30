@@ -128,13 +128,3 @@ http://localhost:5000
 
 ---
 
-## Why Carely?
-
-This project demonstrates:
-
-* Real-world backend engineering
-* Secure authentication & payments
-* API design for a production-grade application
-* Integration with third-party services
-* MedTech domain understanding
-

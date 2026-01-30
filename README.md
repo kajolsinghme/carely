@@ -138,9 +138,3 @@ This project demonstrates:
 * Integration with third-party services
 * MedTech domain understanding
 
----
-
-## 👤 Author
-
-**Kajol**
-Full Stack Developer (Backend-Focused)

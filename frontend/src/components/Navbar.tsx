@@ -1,10 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReusableButton from "./Button";
 
 const Navbar = () => {
-  const handleLogin = () => {
-    alert("Logged in !");
-  };
+  const navigate = useNavigate()
+  
   return (
     <header className="border-b border-gray-200 bg-white">
       <nav className="h-16 max-w-7xl  mx-auto  px-6 flex items-center justify-between">
@@ -41,7 +40,7 @@ const Navbar = () => {
         </ul>
 
         <div className="mr-16">
-          <ReusableButton label="Log In" onClick={handleLogin} />
+          <ReusableButton label="Log In" onClick={() => navigate("/login")} />
         </div>
       </nav>
     </header>

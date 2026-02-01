@@ -1,23 +1,21 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
-import {  useParams } from "react-router-dom";
-import { checkoutAppointment } from "../api/appointment.api";
 
 const BookAppointment = () => {
-  const {id} = useParams()
 
   const handleCheckout = async() => {
-    try{
-      const response = await checkoutAppointment({
-        doctorId: id,
-        scheduledAt: "",
-        duration: 
-      })
-    }
-    catch(error){
-       console.error("Checkout failed:", error);
-    }
+    // try{
+    //   const response = await checkoutAppointment({
+    //     doctorId: id,
+    //     scheduledAt: "",
+    //     duration: ""
+    //   })
+    // }
+    // catch(error){
+    //    console.error("Checkout failed:", error);
+    // }
+    alert("api")
   }
   const consultationFee = 600;
 

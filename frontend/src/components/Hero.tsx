@@ -1,9 +1,8 @@
-import ReusableButton from "./Button";
+import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 const Hero = () => {
-  const handleFindDoctor = () => {
-    alert("mock");
-  };
+  const navigate = useNavigate()
   return (
     <section className="max-w-7xl px-3">
       <div className="flex items-center  h-125 justify-between gap-6">
@@ -17,7 +16,7 @@ const Hero = () => {
             online from the comfort of your home.
           </p>
           <div className="mt-2 flex gap-4">
-            <ReusableButton label="Book Now" onClick={handleFindDoctor} />
+            <Button label="Book Now" onClick={() => navigate('/doctors')} />
           </div>
         </div>
         <div className="w-1/2">

@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { loginApi } from "../api/auth.api";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import type { AxiosError } from "axios";
 
 export default function LoginUI() {
   const [email, setEmail] = useState("");
@@ -10,16 +12,19 @@ export default function LoginUI() {
 
 const navigate = useNavigate();
 
-  const handleLogin = async() => {
-    try {
-      const data = await loginApi({ email, password });
-      localStorage.setItem("token", data.token);
-      navigate("/");
-    } catch (err) {
-      const error = err;
-      alert(error|| "Login failed");
-    }
+  const handleLogin = async () => {
+  try {
+    const data = await loginApi({ email, password });
+    localStorage.setItem("token", data.token);
+    toast.success("Login successful!");
+    setTimeout(() => navigate("/"), 2000 )
+    
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    toast.error(error.response?.data?.message || "Login failed");
+
   }
+};
 
   return (
     <>

@@ -6,6 +6,7 @@ import BookAppointment from "./pages/BookAppointment";
 import Payment from "./pages/Payment";
 import Login from "./pages/Login";
 
+
 const App = () => {
   return (
     <Router>

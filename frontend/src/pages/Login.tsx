@@ -1,10 +1,25 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { loginApi } from "../api/auth.api";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginUI() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+const navigate = useNavigate();
+
+  const handleLogin = async() => {
+    try {
+      const data = await loginApi({ email, password });
+      localStorage.setItem("token", data.token);
+      navigate("/");
+    } catch (err) {
+      const error = err;
+      alert(error|| "Login failed");
+    }
+  }
 
   return (
     <>
@@ -69,6 +84,7 @@ export default function LoginUI() {
                 <button
                   type="button"
                   className="w-full bg-teal-600 text-white rounded-full py-2 font-medium cursor-pointer hover:opacity-90 transition"
+                  onClick={handleLogin}
                 >
                   Log in
                 </button>

@@ -20,17 +20,16 @@ const navigate = useNavigate();
     setTimeout(() => navigate("/"), 2000 )
     
   } catch (err) {
-    const error = err as AxiosError<{ message: string }>;
-    toast.error(error.response?.data?.message || "Login failed");
-
-  }
+  const error = err as AxiosError<{ error: string }>;
+  toast.error(error.response?.data?.error || "Login failed");
+}
 };
 
   return (
     <>
       <Navbar />
       <div className="bg-[#f8f8f8]">
-        <div className="flex items-center justify-center border-2 py-10">
+        <div className="flex items-center justify-center py-10">
           <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="h-40 bg-teal-600 relative">
               <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-white p-3 rounded-xl shadow">
@@ -93,6 +92,13 @@ const navigate = useNavigate();
                 >
                   Log in
                 </button>
+
+               <p className="text-sm text-center text-gray-600">
+                Don't have an account?{" "}
+                <span className="text-teal-600 font-medium cursor-pointer hover:underline" onClick={() => navigate('/signup')}>
+                   Sign Up
+                </span>
+               </p>
               </div>
             </div>
           </div>

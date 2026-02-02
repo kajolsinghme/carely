@@ -6,24 +6,51 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
 
-export default function LoginUI() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const validate = () => {
+
+  if (!email.trim()) {
+    toast.error("Email is required");
+    return false;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    toast.error("Please enter a valid email");
+    return false;
+  }
+
+  if (!password) {
+    toast.error("Password is required");
+    return false;
+  }
+
+  if (password.length < 6) {
+    toast.error("Password must be at least 6 characters");
+    return false;
+  }
+
+  return true;
+};
+
 
   const handleLogin = async () => {
-  try {
-    const data = await loginApi({ email, password });
-    localStorage.setItem("token", data.token);
-    toast.success("Login successful!");
-    setTimeout(() => navigate("/"), 2000 )
-    
-  } catch (err) {
-  const error = err as AxiosError<{ error: string }>;
-  toast.error(error.response?.data?.error || "Login failed");
-}
-};
+    if (!validate()) return;
+    try {
+      const data = await loginApi({ email, password });
+      localStorage.setItem("token", data.token);
+      toast.success("Login successful!");
+      setTimeout(() => navigate("/"), 2000);
+    } catch (err) {
+      const error = err as AxiosError<{ error: string }>;
+      toast.error(error.response?.data?.error || "Login failed");
+    }
+  };
 
   return (
     <>
@@ -40,16 +67,16 @@ const navigate = useNavigate();
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <rect
-                    x="3"
-                    y="4"
-                    width="18"
-                    height="14"
-                    rx="2"
+                  <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"
                     stroke="#0d9488"
                     strokeWidth="2"
                   />
-                  <path d="M3 8h18" stroke="#0d9488" strokeWidth="2" />
+                  <path
+                    d="M4 20c0-4 4-6 8-6s8 2 8 6"
+                    stroke="#0d9488"
+                    strokeWidth="2"
+                  />
                 </svg>
               </div>
             </div>
@@ -76,29 +103,23 @@ const navigate = useNavigate();
                   className="w-full border-b border-gray-300 focus:border-teal-600 outline-none py-2 text-sm"
                 />
 
-                <div className="text-right">
-                  <button
-                    type="button"
-                    className="text-xs text-teal-600 hover:underline"
-                  >
-                    Forgot password?
-                  </button>
-                </div>
-
                 <button
                   type="button"
-                  className="w-full bg-teal-600 text-white rounded-full py-2 font-medium cursor-pointer hover:opacity-90 transition"
+                  className="w-full mt-4 bg-teal-600 text-white rounded-full py-2 font-medium cursor-pointer hover:opacity-90 transition"
                   onClick={handleLogin}
                 >
                   Log in
                 </button>
 
-               <p className="text-sm text-center text-gray-600">
-                Don't have an account?{" "}
-                <span className="text-teal-600 font-medium cursor-pointer hover:underline" onClick={() => navigate('/signup')}>
-                   Sign Up
-                </span>
-               </p>
+                <p className="text-sm text-center text-gray-600">
+                  Don't have an account?{" "}
+                  <span
+                    className="text-teal-600 font-medium cursor-pointer hover:underline"
+                    onClick={() => navigate("/signup")}
+                  >
+                    Sign Up
+                  </span>
+                </p>
               </div>
             </div>
           </div>
@@ -107,4 +128,6 @@ const navigate = useNavigate();
       <Footer />
     </>
   );
-}
+};
+
+export default Login;

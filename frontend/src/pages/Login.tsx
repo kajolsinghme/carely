@@ -30,8 +30,8 @@ const Login = () => {
     return false;
   }
 
-  if (password.length < 6) {
-    toast.error("Password must be at least 6 characters");
+  if (password.length < 4) {
+    toast.error("Password must be at least 4 characters");
     return false;
   }
 

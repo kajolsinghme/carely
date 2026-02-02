@@ -13,7 +13,7 @@ const Signup = () => {
   const [role, setRole] = useState("");
 
   const navigate = useNavigate();
-  
+
   const validate = () => {
   if (!name.trim()) {
     toast.error("Name is required");
@@ -41,8 +41,8 @@ const Signup = () => {
     return false;
   }
 
-  if (password.length < 6) {
-    toast.error("Password must be at least 6 characters");
+  if (password.length < 4) {
+    toast.error("Password must be at least 4 characters");
     return false;
   }
 

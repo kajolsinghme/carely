@@ -1,22 +1,34 @@
 type ButtonProps = {
   label: string;
-  width?: number
-  onClick: () => void;
-  bgColor?: string;
+  onClick?: () => void;
+  width?: string;
+  variant?: "primary" | "danger";
+  type?: "button" | "submit";
 };
 
-const Button: React.FC<ButtonProps> = ({ label, width=28, onClick }) => {
+const Button = ({
+  label,
+  onClick,
+  width = "w-28",
+  variant = "primary",
+  type = "button",
+}: ButtonProps) => {
+  const baseStyles =
+    "rounded-xl py-2 font-medium transition text-white";
+
+  const variants = {
+    primary: "bg-teal-600 hover:opacity-90",
+    danger: "bg-red-600 hover:bg-red-700",
+  };
+
   return (
-    <div>
-      <button
-        onClick={onClick}
-        className={
-          `text-white text-lg w-${width} h-10 mt-3 mb-3 mr-3 rounded-md hover:bg-[#027f74] transition duration-200 bg-teal-600 cursor-pointer`
-        }
-      >
-        {label}
-      </button>
-    </div>
+    <button
+      type={type}
+      onClick={onClick}
+      className={`${width} ${baseStyles} ${variants[variant]}`}
+    >
+      {label}
+    </button>
   );
 };
 

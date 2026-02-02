@@ -189,7 +189,7 @@ const Doctors = () => {
                 <Button
                   label="Book Appointment"
                   onClick={() => handleBook(doctor.id)}
-                  width={48}
+                  width="w-52"
                 />
               </div>
             </div>

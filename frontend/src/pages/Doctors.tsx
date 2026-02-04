@@ -90,20 +90,9 @@ const Doctors = () => {
         </div>
 
         {/* Filters */}
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-6 mb-8 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {/* Location */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Location
-              </label>
-              <select className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500">
-                <option>All Locations</option>
-                <option>Delhi</option>
-                <option>Mumbai</option>
-                <option>Bangalore</option>
-              </select>
-            </div>
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-6 mb-8 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12">
+            
 
             {/* Illness */}
             <div>

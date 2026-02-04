@@ -44,8 +44,9 @@ const Login = () => {
     try {
       const data = await loginApi({ email, password });
       localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role)
       toast.success("Login successful!");
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => navigate("/"), 1500);
     } catch (err) {
       const error = err as AxiosError<{ error: string }>;
       toast.error(error.response?.data?.error || "Login failed");

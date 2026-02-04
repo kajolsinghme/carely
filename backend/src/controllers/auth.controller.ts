@@ -18,12 +18,16 @@ export const login = async (req: Request, res: Response) => {
       userId: result.id,
       role: result.role,
     },
-    process.env['JWT_SECRET']!,
+    process.env["JWT_SECRET"]!,
     {
-      expiresIn: '1h',
+      expiresIn: "1h",
     }
   );
-  res
-    .status(StatusCodes.OK)
-    .json({ message: 'User logged in successfully', token: token });
+
+  res.status(StatusCodes.OK).json({
+    message: "User logged in successfully",
+    token,
+    role: result.role
+  });
 };
+

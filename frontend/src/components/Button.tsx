@@ -13,9 +13,7 @@ const Button = ({
   variant = "primary",
   type = "button",
 }: ButtonProps) => {
-  const baseStyles =
-    "rounded-xl py-2 font-medium transition text-white";
-
+  const baseStyles = "rounded-xl py-2 font-medium transition text-white";
   const variants = {
     primary: "bg-teal-600 hover:opacity-90",
     danger: "bg-red-600 hover:bg-red-700",

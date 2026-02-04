@@ -4,7 +4,6 @@ import { User } from "lucide-react";
 import { useState } from "react";
 
 const Profile = () => {
-
   const profilePhoto: string | null = null;
 
   const [name, setName] = useState("");
@@ -15,154 +14,263 @@ const Profile = () => {
   const [experience, setExperience] = useState("");
   const [fees, setFees] = useState("");
   const [location, setLocation] = useState("");
-  const [availability, setAvailability] = useState("");
+
+  const [availability, setAvailability] = useState({
+    Monday: { enabled: false, start: "", end: "" },
+    Tuesday: { enabled: false, start: "", end: "" },
+    Wednesday: { enabled: false, start: "", end: "" },
+    Thursday: { enabled: false, start: "", end: "" },
+    Friday: { enabled: false, start: "", end: "" },
+    Saturday: { enabled: false, start: "", end: "" },
+    Sunday: { enabled: false, start: "", end: "" },
+  });
+
+  const [slotDuration, setSlotDuration] = useState("");
 
   const handleSave = () => {
-    // const payload = {
-    //   name,
-    //   email,
-    //   age,
-    //   gender,
-    //   specialization,
-    //   experience,
-    //   fees,
-    //   location,
-    //   availability,
-    // };
+    const payload = {
+      name,
+      email,
+      age,
+      gender,
+      specialization,
+      experience,
+      fees,
+      location,
+      availability,
+      slotDuration,
+    };
 
-    // console.log("Profile data:", payload);
-    // TODO: call update profile API
+    console.log("Profile payload:", payload);
   };
 
   return (
     <>
       <Navbar />
 
-      <div className="bg-[#f8f8f8] py-10 min-h-screen">
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
-
-          {/* Profile Image */}
-          <div className="flex justify-center mb-8">
-            <div className="w-28 h-28 border rounded-full overflow-hidden flex items-center justify-center">
+      <div className="bg-[#f6f7fb] py-12">
+        <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-10">
+          {/* ===== Profile Header ===== */}
+          <div className="flex items-center gap-6 mb-12">
+            <div className="w-32 h-32 rounded-full bg-linear-to-br from-teal-500 to-emerald-400 flex items-center justify-center shadow-md">
               {profilePhoto ? (
                 <img
                   src={profilePhoto}
                   alt="Profile"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full rounded-full object-cover"
                 />
               ) : (
-                <User className="w-14 h-14 text-gray-500" />
+                <User className="w-16 h-16 text-white" />
               )}
             </div>
+
+            <div>
+              <h2 className="text-3xl font-bold text-gray-800">
+                {name || "Doctor Profile"}
+              </h2>
+              <p className="text-gray-500 mt-1">
+                Manage your professional information & availability
+              </p>
+            </div>
           </div>
 
-          {/* Profile Form */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* ===== Personal Info ===== */}
+          <section className="mb-12">
+            <h3 className="text-xl font-semibold mb-6 text-gray-800">
+              Personal Information
+            </h3>
 
-            <div>
-              <label className="text-md font-medium">Name</label>
-              <input
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="text-sm font-medium text-gray-600">
+                  Name
+                </label>
+                <input
+                  className="w-full mt-2 border rounded-xl px-4 py-2"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-600">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="w-full mt-2 border rounded-xl px-4 py-2"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-600">Age</label>
+                <input
+                  type="number"
+                  className="w-full mt-2 border rounded-xl px-4 py-2"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-600">
+                  Gender
+                </label>
+                <input
+                  className="w-full mt-2 border rounded-xl px-4 py-2"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                />
+              </div>
             </div>
+          </section>
 
-            <div>
-              <label className="text-md  font-medium">Email</label>
-              <input
-                type="email"
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+          {/* ===== Professional Info ===== */}
+          <section className="mb-12">
+            <h3 className="text-xl font-semibold mb-6 text-gray-800">
+              Professional Details
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="text-sm font-medium text-gray-600">
+                  Specialization
+                </label>
+                <input
+                  className="w-full mt-2 border rounded-xl px-4 py-2"
+                  value={specialization}
+                  onChange={(e) => setSpecialization(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-600">
+                  Experience (years)
+                </label>
+                <input
+                  type="number"
+                  className="w-full mt-2 border rounded-xl px-4 py-2"
+                  value={experience}
+                  onChange={(e) => setExperience(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-600">
+                  Consultation Fees
+                </label>
+                <input
+                  type="number"
+                  className="w-full mt-2 border rounded-xl px-4 py-2"
+                  value={fees}
+                  onChange={(e) => setFees(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-600">
+                  Location
+                </label>
+                <input
+                  className="w-full mt-2 border rounded-xl px-4 py-2"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+              </div>
             </div>
+          </section>
 
-            <div>
-              <label className="text-md  font-medium">Age</label>
-              <input
-                type="number"
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                min={18}
-                max={90}
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-              />
+          {/* ===== Availability ===== */}
+          <section className="mb-12">
+            <h3 className="text-xl font-semibold mb-6 text-gray-800">
+              Weekly Availability
+            </h3>
+
+            <div className="space-y-4">
+              {Object.entries(availability).map(([day, value]) => (
+                <div
+                  key={day}
+                  className={`flex items-center gap-4 p-4 rounded-xl border ${
+                    value.enabled
+                      ? "border-teal-500 bg-teal-50"
+                      : "border-gray-200"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={value.enabled}
+                    onChange={(e) =>
+                      setAvailability({
+                        ...availability,
+                        [day]: { ...value, enabled: e.target.checked },
+                      })
+                    }
+                  />
+
+                  <span className="w-24 font-medium text-gray-700">{day}</span>
+
+                  <input
+                    type="time"
+                    disabled={!value.enabled}
+                    value={value.start}
+                    onChange={(e) =>
+                      setAvailability({
+                        ...availability,
+                        [day]: { ...value, start: e.target.value },
+                      })
+                    }
+                    className="border rounded-lg px-3 py-1 disabled:bg-gray-100"
+                  />
+
+                  <span className="text-gray-500">to</span>
+
+                  <input
+                    type="time"
+                    disabled={!value.enabled}
+                    value={value.end}
+                    onChange={(e) =>
+                      setAvailability({
+                        ...availability,
+                        [day]: { ...value, end: e.target.value },
+                      })
+                    }
+                    className="border rounded-lg px-3 py-1 disabled:bg-gray-100"
+                  />
+                </div>
+              ))}
             </div>
+          </section>
 
-            <div>
-              <label className="text-md font-medium">Gender</label>
-              <input
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-              />
-            </div>
+          {/* ===== Slot Duration ===== */}
+          <section className="mb-12">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">
+              Appointment Slot Duration
+            </h3>
 
-            <div>
-              <label className="text-md font-medium">Specialization</label>
-              <input
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                value={specialization}
-                onChange={(e) => setSpecialization(e.target.value)}
-              />
-            </div>
+            <select
+              value={slotDuration}
+              onChange={(e) => setSlotDuration(e.target.value)}
+              className="border rounded-xl px-4 py-2 w-64"
+            >
+              <option value="">Select duration</option>
+              <option value="15">15 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="45">45 minutes</option>
+              <option value="60">60 minutes</option>
+            </select>
+          </section>
 
-            <div>
-              <label className="text-md  font-medium">Experience (years)</label>
-              <input
-                type="number"
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                min={0}
-                max={80}
-                value={experience}
-                onChange={(e) => setExperience(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="text-md font-medium">Consultation Fees</label>
-              <input
-                type="number"
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                min={0}
-                max={10000}
-                value={fees}
-                onChange={(e) => setFees(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="text-md font-medium">Location</label>
-              <input
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-            </div>
-
-            <div className="md:col-span-2">
-              <label className="text-md font-medium">Availability</label>
-              <input
-                className="w-full mt-2 border rounded-lg px-3 py-2"
-                placeholder="Mon–Fri, 10AM–5PM"
-                value={availability}
-                onChange={(e) => setAvailability(e.target.value)}
-              />
-            </div>
-
-          </div>
-
-          {/* Actions */}
-          <div className="mt-10 flex justify-center">
+          {/* ===== Save Button ===== */}
+          <div className="flex justify-center">
             <button
               onClick={handleSave}
-              className="w-56 bg-teal-600 text-white rounded-full py-2 font-medium hover:opacity-90 transition"
+              className="w-64 bg-teal-600 text-white rounded-full py-3 font-semibold hover:opacity-90 transition"
             >
               Save Profile
             </button>
           </div>
-
         </div>
       </div>
 

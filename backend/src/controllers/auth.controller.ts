@@ -27,6 +27,7 @@ export const login = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({
     message: "User logged in successfully",
     token,
+    id: result.id,
     role: result.role
   });
 };

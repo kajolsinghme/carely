@@ -1,11 +1,10 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { User } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchDoctorProfileApi } from "../api/doctor.api";
 
 const Profile = () => {
-  const profilePhoto: string | null = null;
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
@@ -14,6 +13,7 @@ const Profile = () => {
   const [experience, setExperience] = useState("");
   const [fees, setFees] = useState("");
   const [location, setLocation] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
 
   const [availability, setAvailability] = useState({
     Monday: { enabled: false, start: "", end: "" },
@@ -26,6 +26,31 @@ const Profile = () => {
   });
 
   const [slotDuration, setSlotDuration] = useState("");
+
+  useEffect(() => {
+    const fetchDoctorProfile = async () => {
+      try {
+        const res = await fetchDoctorProfileApi();
+        const doctor = res.data;
+
+        console.log(doctor);
+
+        setName(doctor.name || "");
+        setEmail(doctor.email || "");
+        setAge(doctor.age?.toString() || "");
+        setGender(doctor.gender || "");
+        setSpecialization(doctor.specialization || "");
+        setExperience(doctor.yearsOfExperience?.toString() || "");
+        setFees(doctor.consultationFee?.toString() || "");
+        setLocation(doctor.location || "");
+        setProfilePicture(doctor.profilePicture || null);
+
+      } catch (error) {
+        console.error("Failed to fetch doctor profile", error);
+      }
+    };
+    fetchDoctorProfile();
+  }, []);
 
   const handleSave = () => {
     const payload = {
@@ -53,9 +78,9 @@ const Profile = () => {
           {/* ===== Profile Header ===== */}
           <div className="flex items-center gap-6 mb-12">
             <div className="w-32 h-32 rounded-full bg-linear-to-br from-teal-500 to-emerald-400 flex items-center justify-center shadow-md">
-              {profilePhoto ? (
+              {profilePicture ? (
                 <img
-                  src={profilePhoto}
+                  src={profilePicture}
                   alt="Profile"
                   className="w-full h-full rounded-full object-cover"
                 />
@@ -100,7 +125,7 @@ const Profile = () => {
                   type="email"
                   className="w-full mt-2 border rounded-xl px-4 py-2"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+
                 />
               </div>
 

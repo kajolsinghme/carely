@@ -27,14 +27,18 @@ export const getAllDoctors = async (req: Request, res: Response) => {
     .status(StatusCodes.OK)
     .json({ message: 'Doctors retreived successfully', doctors });
 };
-
 export const getDoctorById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const doctors = await getDoctorByIdService(id as string);
-  if (!doctors) {
+
+  const result = await getDoctorByIdService(id as string);
+
+  if (!result) {
     throw new AppError('Doctor not found', StatusCodes.NOT_FOUND);
   }
-  res
-    .status(StatusCodes.OK)
-    .json({ message: 'Doctor details fetched successfully', doctors });
+
+  res.status(StatusCodes.OK).json({
+    message: 'Doctor details fetched successfully',
+    isDoctor: result.type === 'DOCTOR',
+    data: result.data,
+  });
 };

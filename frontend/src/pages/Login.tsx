@@ -44,6 +44,7 @@ const Login = () => {
     try {
       const data = await loginApi({ email, password });
       localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.id)
       localStorage.setItem("role", data.role)
       toast.success("Login successful!");
       setTimeout(() => navigate("/"), 1500);

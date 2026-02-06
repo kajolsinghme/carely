@@ -64,26 +64,23 @@ export const getAllDoctorsService = async (filters: {
 };
 
 export const getDoctorByIdService = async (id: string) => {
-  const doctorProfile = await DoctorProfileModel.findOne({
-    userId: id,
-  }).populate({
-    path: 'userId',
-    select: 'name email gender age',
-  });
-
-  if (doctorProfile) {
-    return {
-      type: 'DOCTOR',
-      data: doctorProfile,
-    };
-  }
-
-  const user = await UserModel.findById(id).select('name email');
+  const user = await UserModel.findById(id).select(
+    'name email gender age role'
+  );
 
   if (!user) return null;
 
+  // Only doctors can have a profile
+  let doctorProfile = null;
+
+
+    doctorProfile = await DoctorProfileModel.findOne({
+      userId: user._id,
+    });
+  }
+
   return {
-    type: 'USER',
-    data: user,
+    user,
+    doctorProfile, // null if not created
   };
 };

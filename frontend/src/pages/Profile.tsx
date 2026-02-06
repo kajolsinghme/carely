@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { User } from "lucide-react";
 import { useEffect, useState } from "react";
-import { fetchDoctorProfileApi } from "../api/doctor.api";
+import { fetchDoctorProfileApi, updateDoctorProfileApi } from "../api/doctor.api";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -52,20 +52,26 @@ const Profile = () => {
     fetchDoctorProfile();
   }, []);
 
-  const handleSave = () => {
+  const handleSave = async() => {
+
+     const formattedAvailability = Object.entries(availability).filter(([,v]) => v.enabled).map(([day,v]) => ({
+        day,
+        startTime: v.start,
+        endTime: v.end
+     }))
     const payload = {
       name,
-      email,
       age,
       gender,
       specialization,
-      experience,
-      fees,
+      yearsOfExperience: Number(experience),
+      consultationFee: Number(fees),
       location,
-      availability,
-      slotDuration,
+    availability: formattedAvailability,
+    slotDuration: Number(slotDuration),
     };
 
+    await updateDoctorProfileApi(payload);
     console.log("Profile payload:", payload);
   };
 

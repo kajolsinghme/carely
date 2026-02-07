@@ -25,7 +25,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center gap-2 ml-16">
           <img
-            src="../src/assets/Carely Logo.png"
+            src="../src/assets/carely-logo.png"
             alt="Carely Logo"
             className="w-10 h-8"
           />

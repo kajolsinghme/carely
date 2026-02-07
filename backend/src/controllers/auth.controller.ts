@@ -17,6 +17,7 @@ export const login = async (req: Request, res: Response) => {
     {
       userId: result.id,
       role: result.role,
+      isProfileCompleted: result.isProfileCompleted
     },
     process.env["JWT_SECRET"]!,
     {
@@ -28,7 +29,8 @@ export const login = async (req: Request, res: Response) => {
     message: "User logged in successfully",
     token,
     id: result.id,
-    role: result.role
+    role: result.role,
+    isProfileCompleted: result.isProfileCompleted
   });
 };
 

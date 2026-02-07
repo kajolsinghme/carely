@@ -54,5 +54,6 @@ export const loginService = async (data: LoginInput): Promise<LoginResult> => {
   return {
     id: user._id.toString(),
     role: user.role,
+    isProfileCompleted: user.isProfileCompleted
   };
 };

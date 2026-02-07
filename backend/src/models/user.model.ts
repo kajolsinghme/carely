@@ -9,6 +9,7 @@ export interface IUser extends Document {
   age: number | null;
   gender: Gender | null;
   role: UserRoles;
+  isProfileCompleted: boolean;
 }
 const userSchema = new mongoose.Schema<IUser>(
   {
@@ -22,6 +23,10 @@ const userSchema = new mongoose.Schema<IUser>(
       enum: Object.values(UserRoles),
       default: UserRoles.PATIENT,
     },
+    isProfileCompleted: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true,

@@ -21,4 +21,5 @@ export interface LoginInput {
 export interface LoginResult {
   id: string;
   role: 'Patient' | 'Doctor';
+  isProfileCompleted: boolean;
 }

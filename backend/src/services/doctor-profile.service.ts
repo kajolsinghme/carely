@@ -10,15 +10,8 @@ export const updateDoctorProfileService = async (
 ) => {
   const doctorProfile = await DoctorProfileModel.findOneAndUpdate(
     { userId },
-    {
-      $set: {
-        ...data,
-      },
-    },
-    {
-      new: true,
-      upsert: true, // creates profile if not exists
-    }
+    { $set: { ...data } },
+    { new: true, upsert: true }
   );
 
   if (!doctorProfile) {
@@ -41,21 +34,11 @@ export const getAllDoctorsService = async (filters: {
     consultationFee?: { $lte?: number };
   } = {};
 
-  if (filters.specialization) {
-    query.specialization = filters.specialization;
-  }
-
-  if (filters.location) {
-    query.location = filters.location;
-  }
-
-  if (filters.minExperience) {
+  if (filters.specialization) query.specialization = filters.specialization;
+  if (filters.location) query.location = filters.location;
+  if (filters.minExperience)
     query.yearsOfExperience = { $gte: filters.minExperience };
-  }
-
-  if (filters.maxFee) {
-    query.consultationFee = { $lte: filters.maxFee };
-  }
+  if (filters.maxFee) query.consultationFee = { $lte: filters.maxFee };
 
   return DoctorProfileModel.find(query).populate({
     path: 'userId',
@@ -70,17 +53,14 @@ export const getDoctorByIdService = async (id: string) => {
 
   if (!user) return null;
 
-  // Only doctors can have a profile
   let doctorProfile = null;
 
-
+  // Only fetch profile if role is doctor
+  if (user.role === 'Doctor') {
     doctorProfile = await DoctorProfileModel.findOne({
       userId: user._id,
     });
   }
 
-  return {
-    user,
-    doctorProfile, // null if not created
-  };
+  return { user, doctorProfile };
 };

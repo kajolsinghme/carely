@@ -25,3 +25,9 @@ export const updateDoctorProfileApi = async (data: {
   const res = await api.patch("/doctor/profile", data);
   return res.data;
 };
+
+
+export const fetchDoctorsApi = async () => {
+  const res = await api.get(`/doctor`);
+  return res.data;
+};

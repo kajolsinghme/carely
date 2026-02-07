@@ -2,7 +2,12 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { User } from "lucide-react";
 import { useEffect, useState } from "react";
-import { fetchDoctorProfileApi, updateDoctorProfileApi } from "../api/doctor.api";
+import {
+  fetchDoctorProfileApi,
+  updateDoctorProfileApi,
+} from "../api/doctor.api";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -27,6 +32,8 @@ const Profile = () => {
 
   const [slotDuration, setSlotDuration] = useState("");
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     const fetchDoctorProfile = async () => {
       try {
@@ -44,7 +51,6 @@ const Profile = () => {
         setFees(doctor.doctorProfile.consultationFee?.toString() || "");
         setLocation(doctor.doctorProfile.location || "");
         setProfilePicture(doctor.doctorProfile.profilePicture || null);
-
       } catch (error) {
         console.error("Failed to fetch doctor profile", error);
       }
@@ -52,13 +58,48 @@ const Profile = () => {
     fetchDoctorProfile();
   }, []);
 
-  const handleSave = async() => {
+  const validateProfile = () => {
+    if (!name || !email || !age || !gender) {
+      toast.error("Please fill all personal information");
+      return false;
+    }
+    if (!specialization || !experience || !fees || !location) {
+      toast.error("Please fill all professional details");
+      return false;
+    }
 
-     const formattedAvailability = Object.entries(availability).filter(([,v]) => v.enabled).map(([day,v]) => ({
+    const hasAvailability = Object.values(availability).some((v) => v.enabled);
+    if (!hasAvailability) {
+      toast.error("Please select at least one availability day");
+      return false;
+    }
+
+    for (const day of Object.values(availability)) {
+      if (day.enabled && (!day.start || !day.end)) {
+        toast.error("Please set start and end time for selected days");
+        return false;
+      }
+    }
+
+    if (!slotDuration) {
+      toast.error("Please select slot duration");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSave = async () => {
+    if (!validateProfile()) return;
+
+    const formattedAvailability = Object.entries(availability)
+      .filter(([, v]) => v.enabled)
+      .map(([day, v]) => ({
         day,
         startTime: v.start,
-        endTime: v.end
-     }))
+        endTime: v.end,
+      }));
+
     const payload = {
       name,
       age,
@@ -67,12 +108,14 @@ const Profile = () => {
       yearsOfExperience: Number(experience),
       consultationFee: Number(fees),
       location,
-    availability: formattedAvailability,
-    slotDuration: Number(slotDuration),
+      availability: formattedAvailability,
+      slotDuration: Number(slotDuration),
     };
 
     await updateDoctorProfileApi(payload);
-    console.log("Profile payload:", payload);
+
+    toast.success("Profile updated successfully");
+    navigate('/')
   };
 
   return (
@@ -131,8 +174,7 @@ const Profile = () => {
                   type="email"
                   className="w-full mt-2 border rounded-xl px-4 py-2"
                   value={email}
-                   onChange={(e) =>setEmail(e.target.value )}
-
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
 
@@ -142,6 +184,8 @@ const Profile = () => {
                   type="number"
                   className="w-full mt-2 border rounded-xl px-4 py-2"
                   value={age}
+                  min={10}
+                  max={90}
                   onChange={(e) => setAge(e.target.value)}
                 />
               </div>
@@ -185,6 +229,8 @@ const Profile = () => {
                   type="number"
                   className="w-full mt-2 border rounded-xl px-4 py-2"
                   value={experience}
+                  min={0}
+                  max={80}
                   onChange={(e) => setExperience(e.target.value)}
                 />
               </div>
@@ -197,6 +243,8 @@ const Profile = () => {
                   type="number"
                   className="w-full mt-2 border rounded-xl px-4 py-2"
                   value={fees}
+                  min={0}
+                  max={5000}
                   onChange={(e) => setFees(e.target.value)}
                 />
               </div>

@@ -8,14 +8,30 @@ export const updateDoctorProfileService = async (
   userId: string,
   data: DoctorProfileInput
 ) => {
+
+  const {
+    name,
+    age,
+    gender,
+    location,
+    specialization,
+    yearsOfExperience,
+    consultationFee,
+    availability,
+    slotDuration,
+    profilePicture,
+  } = data;
+
+  await UserModel.findByIdAndUpdate(userId,{$set: {name, age, gender, isProfileCompleted: true}},{new: true})
+
   const doctorProfile = await DoctorProfileModel.findOneAndUpdate(
     { userId },
-    { $set: { ...data } },
+    { $set: {specialization,location,yearsOfExperience,consultationFee,availability,slotDuration,profilePicture} },
     { new: true, upsert: true }
   );
 
-  if (!doctorProfile) {
-    throw new AppError('Doctor profile not found', StatusCodes.NOT_FOUND);
+   if (!doctorProfile) {
+    throw new AppError("Doctor profile update failed", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 
   return doctorProfile;

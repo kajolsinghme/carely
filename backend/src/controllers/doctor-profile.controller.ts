@@ -27,6 +27,7 @@ export const getAllDoctors = async (req: Request, res: Response) => {
     .status(StatusCodes.OK)
     .json({ message: 'Doctors retreived successfully', doctors });
 };
+
 export const getDoctorById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
@@ -38,7 +39,6 @@ export const getDoctorById = async (req: Request, res: Response) => {
 
   res.status(StatusCodes.OK).json({
     message: 'Doctor details fetched successfully',
-    isDoctor: result.type === 'DOCTOR',
-    data: result.data,
+    data: result,
   });
 };

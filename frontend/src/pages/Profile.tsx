@@ -33,17 +33,17 @@ const Profile = () => {
         const res = await fetchDoctorProfileApi();
         const doctor = res.data;
 
-        console.log(doctor);
+        console.log("data", doctor);
 
-        setName(doctor.name || "");
-        setEmail(doctor.email || "");
-        setAge(doctor.age?.toString() || "");
-        setGender(doctor.gender || "");
-        setSpecialization(doctor.specialization || "");
-        setExperience(doctor.yearsOfExperience?.toString() || "");
-        setFees(doctor.consultationFee?.toString() || "");
-        setLocation(doctor.location || "");
-        setProfilePicture(doctor.profilePicture || null);
+        setName(doctor.user.name || "");
+        setEmail(doctor.user.email || "");
+        setAge(doctor.user.age?.toString() || "");
+        setGender(doctor.user.gender || "");
+        setSpecialization(doctor.doctorProfile.specialization || "");
+        setExperience(doctor.doctorProfile.yearsOfExperience?.toString() || "");
+        setFees(doctor.doctorProfile.consultationFee?.toString() || "");
+        setLocation(doctor.doctorProfile.location || "");
+        setProfilePicture(doctor.doctorProfile.profilePicture || null);
 
       } catch (error) {
         console.error("Failed to fetch doctor profile", error);
@@ -131,6 +131,7 @@ const Profile = () => {
                   type="email"
                   className="w-full mt-2 border rounded-xl px-4 py-2"
                   value={email}
+                   onChange={(e) =>setEmail(e.target.value )}
 
                 />
               </div>

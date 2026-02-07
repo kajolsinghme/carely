@@ -47,19 +47,17 @@ export const getAllDoctorsService = async (filters: {
 };
 
 export const getDoctorByIdService = async (id: string) => {
+
   const user = await UserModel.findById(id).select(
-    'name email gender age role'
+    'name email gender age isProfileCompleted role'
   );
 
-  if (!user) return null;
+  if(!user) return null;
 
   let doctorProfile = null;
 
-  // Only fetch profile if role is doctor
-  if (user.role === 'Doctor') {
-    doctorProfile = await DoctorProfileModel.findOne({
-      userId: user._id,
-    });
+  if(user.isProfileCompleted){
+      doctorProfile = await DoctorProfileModel.findOne({userId: user._id})
   }
 
   return { user, doctorProfile };
